@@ -58,6 +58,21 @@ export const useDessertStore = defineStore('dessertStore', {
             category: '' as string,
             price: 0 as number
         },
+        cake: {
+            name: '' as string,
+            category: '' as string,
+            price: 0 as number
+        },
+        brownie: {
+            name: '' as string,
+            category: '' as string,
+            price: 0 as number
+        },
+        panna: {
+            name: '' as string,
+            category: '' as string,
+            price: 0 as number
+        },
         loading: true,
     }),
     actions: {
@@ -132,5 +147,41 @@ export const useDessertStore = defineStore('dessertStore', {
                 this.loading = false;
             }
         },
+
+        async getCake(): Promise<void> {
+            try {
+                this.loading = true;
+                const response = await api.get('/6');
+                this.cake = response.data;
+            } catch (error) {
+                console.error('Erro ao carregar o red velvet', error);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async getBrownie(): Promise<void> {
+            try {
+                this.loading = false;
+                const response = await api.get('/7');
+                this.brownie = response.data;
+            } catch (error) {
+                console.error('Erro ao carregar brownie', error);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async getPanna(): Promise<void> {
+            try {
+                this.loading = true;
+                const response = await api.get('/8');
+                this.panna = response.data;
+            } catch (error) {
+                console.error('Erro ao carregar panna', error);
+            } finally {
+                this.loading = false;
+            }
+        }
     }
 });

@@ -11,25 +11,31 @@ const props = defineProps<{
     src: string
 }>();
 
+const emit = defineEmits<{
+    (e: 'clickButton'): void;
+}>();
+
+const emitClickButton = () => {
+    emit('clickButton');
+};
+
 </script>
 
 <template>
     <div class="card d-flex flex-column h-100">
         <img :src="props.src" class="card-img-top" :alt="props.card.name">
         <div class="card-body bg-dark text-white d-flex flex-column justify-content-between">
-            <span>
+            <p class="h6 text-warning">
                 {{ props.card.name }}
-            </span>
+            </p>
             <p class="card-text">
                 {{ props.card.category }}
             </p>
-            <p class="card-text">
+            <p class="card-text text-danger">
                 R$ {{ props.card.price }}
             </p>
-            <button
-                class="btn btn-primary w-100 w-sm-auto"
-                type="button">
-                    <slot></slot>
+            <button class="btn btn-light w-100 w-sm-auto" type="button" @click="emitClickButton()">
+                Add to cart
             </button>
         </div>
     </div>
