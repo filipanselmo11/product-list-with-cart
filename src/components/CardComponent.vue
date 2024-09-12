@@ -24,7 +24,7 @@ const props = defineProps<{
                 {{ props.card.category }}
             </p>
             <p class="card-text">
-                {{ props.card.price }}
+                R$ {{ props.card.price }}
             </p>
             <button
                 class="btn btn-primary w-100 w-sm-auto"
