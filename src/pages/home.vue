@@ -2,11 +2,9 @@
 import { onMounted } from 'vue';
 import { useDessertStore } from '../store/dessertStore';
 import CardComponent from '../components/CardComponent.vue';
-
+import waffleImage from '../assets/images/image-waffle-desktop.jpg';
 
 const dessertStore = useDessertStore();
-
-const waffleImage = `@/assets/images/image-waffle-desktop.jpg`;
 
 onMounted(() => {
     dessertStore.getWaffles()
