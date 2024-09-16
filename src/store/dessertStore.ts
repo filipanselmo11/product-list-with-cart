@@ -28,6 +28,11 @@ import { api } from "../services/api";
 
 export const useDessertStore = defineStore('dessertStore', {
     state: () => ({
+        cart: [] as Array<{
+            name: string,
+            category: string,
+            price: number
+        }>,
         waffle: {
             name: '' as string,
             category: '' as string,
@@ -69,6 +74,11 @@ export const useDessertStore = defineStore('dessertStore', {
             price: 0 as number
         },
         panna: {
+            name: '' as string,
+            category: '' as string,
+            price: 0 as number
+        },
+        dessert: {
             name: '' as string,
             category: '' as string,
             price: 0 as number
@@ -182,6 +192,10 @@ export const useDessertStore = defineStore('dessertStore', {
             } finally {
                 this.loading = false;
             }
+        },
+
+        addToCart(dessert: any) {
+            this.cart.push(dessert);
         }
     }
 });
