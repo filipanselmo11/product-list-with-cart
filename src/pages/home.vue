@@ -18,11 +18,18 @@ const dessertStore = useDessertStore();
 
 const modal = ref(false);
 
+const modalCheck = ref(false);
+
+
 const selectedDessert = ref<any>(null);
 
 const openModal = (dessert: any) => {
     selectedDessert.value = dessert;
     modal.value = true;
+};
+
+const openCheckoutModal = () => {
+    modalCheck.value = true;
 };
 
 const addDessertToCart = () => {
@@ -34,6 +41,10 @@ const addDessertToCart = () => {
 
 const closeModal = () => {
     modal.value = false;
+};
+
+const closeCheckModal = () => {
+    modalCheck.value = false;
 };
 
 const cartItems = computed(() => dessertStore.cart);
@@ -65,25 +76,20 @@ onMounted(() => {
                     <h2 class="display-2 display-md-3 display-lg-4 text-center mb-3 mb-md-0">
                         Desserts
                     </h2>
-                    <CartCardComponent :items="cartItems" class="flex-shrink-1" />
+                    <CartCardComponent :items="cartItems" @open-check-modal="openCheckoutModal()"
+                        class="flex-shrink-1" />
                 </div>
                 <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-3">
                     <div class="col">
-                        <CardComponent
-                            :card="dessertStore.waffle"
-                            :src="waffleImage"
+                        <CardComponent :card="dessertStore.waffle" :src="waffleImage"
                             @click-button="openModal(dessertStore.waffle)" />
                     </div>
                     <div class="col">
-                        <CardComponent
-                            :card="dessertStore.cremeBrulle"
-                            :src="cremeBrulleImage"
+                        <CardComponent :card="dessertStore.cremeBrulle" :src="cremeBrulleImage"
                             @click-button="openModal(dessertStore.cremeBrulle)" />
                     </div>
                     <div class="col">
-                        <CardComponent
-                            :card="dessertStore.macaron"
-                            :src="macaronImage"
+                        <CardComponent :card="dessertStore.macaron" :src="macaronImage"
                             @click-button="openModal(dessertStore.macaron)" />
                     </div>
                     <div class="col">
@@ -119,7 +125,9 @@ onMounted(() => {
                                     <h5 class="modal-title text-warning">
                                         Adicionando {{ selectedDessert?.name }} ao carrinho
                                     </h5>
-                                    <button type="button" class="btn btn-primary btn-close"
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary btn-close"
                                         @click="closeModal()"></button>
                                 </div>
                                 <div class="modal-body">
@@ -133,8 +141,36 @@ onMounted(() => {
                                     <button type="button" class="btn btn-secondary" @click="closeModal()">
                                         Fechar
                                     </button>
-                                    <button type="button" class="btn btn-primary" @click="addDessertToCart()">
+                                    <button type="button" class="btn btn-success" @click="addDessertToCart()">
                                         Add ao carrinho
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ModalComponent>
+                <ModalComponent v-if="modalCheck">
+                    <div class="modal fade show d-block bg-light" tabindex="-1" style="--bs-bg-opacity: .5;">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content bg-dark">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-warning">
+                                        Checkout
+                                    </h5>
+                                </div>
+                                <div class="modal-body text-white">
+                                    <ul>
+                                        <li v-for="(item, index) in cartItems" :key="index">
+                                            {{ item.name }} - {{ item.price }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" @click="closeCheckModal()">
+                                        Cancelar
+                                    </button>
+                                    <button type="button" class="btn btn-success">
+                                        Realizar compra
                                     </button>
                                 </div>
                             </div>

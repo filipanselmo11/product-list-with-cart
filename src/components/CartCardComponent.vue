@@ -4,6 +4,14 @@ const props = defineProps<{
     items: any[]
 }>();
 
+const emit = defineEmits<{
+    (e: 'openCheckModal'): void;
+}>();
+
+const emitOpenCheckModal = () => {
+    emit('openCheckModal');
+};
+
 const removerItem = () => {
     if (props.items.length > 0) {
         props.items.pop();
@@ -35,13 +43,22 @@ const removerItem = () => {
                         </div>
                     </div>
                     <div class="card-footer text-white text-center">
-                        <button
-                            type="button"
-                            :disabled="props.items.length <= 0"
-                            class="btn btn-secondary"
-                            @click="removerItem()">
-                            Remover item
-                        </button>
+                        <div class="d-grid gap-2 d-md-block">
+                            <button
+                                class="btn btn-secondary me-3"
+                                type="button"
+                                :disabled="props.items.length <= 0"
+                                @click="removerItem()">
+                                    Remover Item
+                            </button>
+                            <button
+                                class="btn btn-success"
+                                type="button"
+                                :disabled="props.items.length <= 0"
+                                @click="emitOpenCheckModal()">
+                                    Checkout
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
